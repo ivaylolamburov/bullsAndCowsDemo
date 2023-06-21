@@ -1,5 +1,9 @@
-﻿string input;
-string signature = "1023";
+﻿Random random = new Random();
+IEnumerable<int> numbers = Enumerable.Range(1023, 8853).Where(x => !HasSameSymbols(x.ToString()));
+string input;
+string signature = numbers.ElementAt(random.Next(0, numbers.Count())).ToString();
+Console.WriteLine(signature);
+
 
 //START THE GAME
 bool game = true;
@@ -61,7 +65,7 @@ static bool IsInputCorrect(string number)
 {
     if (number.Length != 4) return false;
 
-    if (!HasSameSymbols(number)) return false;
+    if (HasSameSymbols(number)) return false;
 
     if (!int.TryParse(number, out _)) return false;
 
@@ -69,7 +73,6 @@ static bool IsInputCorrect(string number)
 
     return true;
 }
-
 static bool HasSameSymbols(string number)
 {
     for (int i = 0; i < number.Length - 1; i++)
@@ -78,10 +81,10 @@ static bool HasSameSymbols(string number)
         {
             if (number[i] == number[j])
             {
-                return false;
+                return true;
             }
         }
 
     }
-    return true;
+    return false;
 }
